@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/Quiz PPSI - Mutia Afif Ramadhani 24311124/Aplikasi/$1"
+    }
+  ]
+}
+

@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SI-PAD Lamsel — E-Retribusi Wisata Pesisir Kalianda | BPPRD Lampung Selatan</title>
+  <meta name="description" content="Sistem Informasi Pajak & Retribusi Daerah Kabupaten Lampung Selatan - Modul E-Retribusi Wisata Terintegrasi Kawasan Pesisir Kalianda.">
+
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-badge">
+        <span class="material-symbols-outlined">account_balance</span>
+      </div>
+      <div class="brand-info">
+        <h2>SI-PAD LAMSEL</h2>
+        <span>BPPRD KAB. LAMPUNG SELATAN</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Operasional Lapangan</div>
+      <a href="#" class="nav-item active" data-target="screen-a">
+        <span class="material-symbols-outlined">qr_code_scanner</span>
+        <span>Validator Lapangan</span>
+        <span class="badge">POS</span>
+      </a>
+      <a href="#" class="nav-item" data-target="screen-a">
+        <span class="material-symbols-outlined">point_of_sale</span>
+        <span>POS & Gate Scanner</span>
+      </a>
+      <a href="#" class="nav-item" data-target="screen-a">
+        <span class="material-symbols-outlined">location_on</span>
+        <span>Titik Pos Kalianda</span>
+      </a>
+
+      <div class="nav-section-label">Layanan Wisatawan</div>
+      <a href="#" class="nav-item" data-target="screen-b">
+        <span class="material-symbols-outlined">confirmation_number</span>
+        <span>Portal E-Ticketing</span>
+      </a>
+      <a href="#" class="nav-item" data-target="screen-d">
+        <span class="material-symbols-outlined">smartphone</span>
+        <span>Pratinjau PWA Turis</span>
+        <span class="badge" style="background-color: #059669;">E-TIKET</span>
+      </a>
+
+      <div class="nav-section-label">Pengawasan & Kasda</div>
+      <a href="#" class="nav-item" data-target="screen-c">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard Eksekutif</span>
+      </a>
+      <a href="#" class="nav-item" data-target="screen-c">
+        <span class="material-symbols-outlined">receipt_long</span>
+        <span>Rekonsiliasi Kas PAD</span>
+      </a>
+      <a href="#" class="nav-item" data-target="screen-c">
+        <span class="material-symbols-outlined">verified_user</span>
+        <span>Audit Petugas Pos</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="system-status-box">
+        <div class="status-row">
+          <span>QRIS Switcher</span>
+          <span class="status-indicator">
+            <span class="status-dot"></span> Aktif
+          </span>
+        </div>
+        <div class="status-row">
+          <span>NMID Kasda Lamsel</span>
+          <strong style="color: var(--on-surface);">ID1020088219</strong>
+        </div>
+        <div class="status-row">
+          <span>Server BPPRD</span>
+          <span class="status-indicator">
+            <span class="status-dot" id="sidebar-kasda-dot"></span>
+            <span id="sidebar-kasda-text">Terhubung Normal</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <main class="main-wrapper">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="topbar-title">
+          <h1 id="topbar-main-title">Validator Lapangan & POS Gate</h1>
+          <p id="topbar-sub-title">Pos 1 Pantai Marina Kalianda — Gate Scanner</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <!-- Quick Role Switcher Buttons -->
+        <div class="role-switcher-group">
+          <button class="role-btn active" data-target="screen-a">
+            <span class="material-symbols-outlined" style="font-size: 16px;">badge</span>
+            Petugas Gate
+          </button>
+          <button class="role-btn" data-target="screen-b">
+            <span class="material-symbols-outlined" style="font-size: 16px;">explore</span>
+            Portal Turis
+          </button>
+          <button class="role-btn" data-target="screen-c">
+            <span class="material-symbols-outlined" style="font-size: 16px;">monitoring</span>
+            Eksekutif PAD
+          </button>
+          <button class="role-btn" data-target="screen-d">
+            <span class="material-symbols-outlined" style="font-size: 16px;">smartphone</span>
+            PWA Mobile
+          </button>
+        </div>
+
+        <!-- Offline Toggle Pill -->
+        <div class="offline-toggle-pill" id="offline-toggle-btn" title="Klik untuk simulasi mode offline jika sinyal pantai putus">
+          <span class="material-symbols-outlined" style="font-size: 16px;">wifi</span>
+          <span class="offline-status-text">Online / 4G Kasda</span>
+          <span class="badge" id="offline-sync-badge" style="display:none; background: #B45309; color: white; padding: 2px 6px; border-radius: 99px; font-size: 10px;">0</span>
+        </div>
+
+        <!-- Sound Audio Cue Toggle -->
+        <button class="icon-action-btn" id="toggle-sound-btn" title="Toggle Suara Beep Validator">
+          <span class="material-symbols-outlined">volume_up</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         SCREEN A: VALIDATOR LAPANGAN & POS GATE SCANNER (PETUGAS GERBANG)
+         ==================================================================== -->
+    <section class="screen-view active" id="screen-a">
+      <!-- Terminal Header Card -->
+      <div class="terminal-header-card">
+        <div class="officer-profile">
+          <div class="officer-avatar">AF</div>
+          <div class="officer-info">
+            <h3>Ahmad Fauzi (NIP. 19880412 201201 1 002)</h3>
+            <p>
+              <span class="material-symbols-outlined" style="font-size: 15px;">storefront</span>
+              Petugas Pos 1 Pantai Marina Kalianda • Shift Pagi (07.00 - 15.00 WIB)
+            </p>
+          </div>
+        </div>
+        <div class="terminal-meta-badges">
+          <div class="meta-pill">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: #38BDF8;">schedule</span>
+            <span id="terminal-clock-time">11:42:15 WIB</span>
+          </div>
+          <div class="meta-pill">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: #4ADE80;">battery_charging_80</span>
+            <span>87% ⚡</span>
+          </div>
+          <div class="meta-pill">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: #60A5FA;">print</span>
+            <span>Thermal PT-210 Terhubung</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Dual Column Layout -->
+      <div class="validator-grid-layout">
+        <!-- LEFT: SCANNER & VALIDATION RESULT -->
+        <div>
+          <!-- Scanner Card -->
+          <div class="scanner-main-card">
+            <div class="card-title-row">
+              <h3>
+                <span class="material-symbols-outlined" style="color: var(--primary);">center_focus_strong</span>
+                Pemindai QR Code E-Tiket Wisatawan
+              </h3>
+              <span class="badge" style="background-color: var(--primary-light); color: var(--primary); padding: 4px 10px; font-weight: 700; border-radius: 99px;">
+                Respon &lt; 2 Detik
+              </span>
+            </div>
+
+            <!-- Viewfinder Area -->
+            <div class="viewfinder-wrapper">
+              <div class="camera-preview-sim"></div>
+              <div class="scan-box-target">
+                <div class="laser-scan-line"></div>
+                <span class="material-symbols-outlined" style="color: rgba(255,255,255,0.25); font-size: 64px;">qr_code_2</span>
+              </div>
+              <div class="scanner-hint-text">
+                <span class="material-symbols-outlined" style="font-size: 16px; color: #38BDF8;">visibility</span>
+                Arahkan QR Code E-Tiket Wisatawan ke Dalam Kotak Target
+              </div>
+            </div>
+
+            <!-- Scanner Controls -->
+            <div class="scanner-controls-bar">
+              <button class="control-btn" id="toggle-torch-btn">
+                <span class="material-symbols-outlined">flashlight_on</span>
+                Senter (Torch)
+              </button>
+              <button class="control-btn" id="switch-camera-btn">
+                <span class="material-symbols-outlined">flip_camera_ios</span>
+                Ganti Kamera
+              </button>
+              <button class="control-btn" id="btn-sync-offline-queue">
+                <span class="material-symbols-outlined">sync</span>
+                Sinkron Antrean
+              </button>
+            </div>
+
+            <!-- Manual Bypass Input -->
+            <div class="bypass-input-box">
+              <div class="bypass-label">
+                <span>VERIFIKASI MANUAL (JIKA LAYAR HP PECAH/KOTOR)</span>
+                <span style="color: var(--outline);">Format: LMS-XXXXXXXX-XXXX</span>
+              </div>
+              <form class="bypass-form" id="bypass-ticket-form">
+                <input type="text" class="bypass-input" id="bypass-ticket-input" placeholder="Contoh: LMS-20241012-0842" autocomplete="off">
+                <button type="submit" class="btn-primary">
+                  <span class="material-symbols-outlined">verified</span>
+                  Verifikasi
+                </button>
+              </form>
+
+              <!-- Quick Simulation Test Triggers -->
+              <div class="test-triggers-row">
+                <span style="font-size: 11px; font-weight: 700; color: var(--outline); align-self: center;">Uji Cepat Vibe:</span>
+                <button type="button" class="test-pill-btn" id="test-btn-valid">
+                  🟢 Test Tiket Baru (Valid)
+                </button>
+                <button type="button" class="test-pill-btn" id="test-btn-duplicate">
+                  🔴 Test Tiket Terpakai (Duplikat)
+                </button>
+                <button type="button" class="test-pill-btn" id="test-btn-active-pwa">
+                  📱 Test Tiket PWA Aktif
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Validation Result Card (Changes State on Scan) -->
+          <div class="validation-card state-idle" id="validation-result-card" style="margin-top: 24px;">
+            <div class="validation-badge-banner" style="justify-content: center;">
+              <span class="material-symbols-outlined" style="font-size: 40px; color: var(--outline);">sensors</span>
+            </div>
+            <h3 style="color: var(--on-surface-variant); font-size: 16px;">Menunggu Pemindaian Tiket...</h3>
+            <p style="font-size: 12px; color: var(--outline); margin-top: 4px;">
+              Gunakan tombol uji cepat di atas atau arahkan QR Code untuk melihat status validitas seketika.
+            </p>
+          </div>
+        </div>
+
+        <!-- RIGHT: LOKET TUNAI DARURAT (OFFLINE READY POS) -->
+        <div id="pos-calculator-section">
+          <div class="pos-cash-card">
+            <div class="pos-header-row">
+              <h3>
+                <span class="material-symbols-outlined" style="color: var(--tertiary);">point_of_sale</span>
+                Loket Tunai Darurat (Offline Ready)
+              </h3>
+              <span class="badge" style="background-color: var(--tertiary-light); color: var(--tertiary); padding: 4px 10px; font-weight: 800; border-radius: 99px;">
+                Porporasi Perda Lamsel
+              </span>
+            </div>
+            <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 16px;">
+              Gunakan kalkulator ini untuk melayani wisatawan yang tidak memiliki e-wallet/QRIS atau saat jaringan internet mati.
+            </p>
+
+            <div class="pos-calculator-table">
+              <!-- Item 1: Dewasa -->
+              <div class="pos-calc-item">
+                <div class="calc-info">
+                  <h4>1 Pengunjung Dewasa</h4>
+                  <span>Tarif: Rp10.000 / orang</span>
+                </div>
+                <div class="stepper-control">
+                  <button type="button" class="stepper-btn" data-type="dewasa" data-delta="-1">−</button>
+                  <span class="stepper-val" id="qty-dewasa">1</span>
+                  <button type="button" class="stepper-btn" data-type="dewasa" data-delta="1">+</button>
+                </div>
+              </div>
+
+              <!-- Item 2: Motor -->
+              <div class="pos-calc-item">
+                <div class="calc-info">
+                  <h4>1 Kendaraan Roda 2 (Motor)</h4>
+                  <span>Tarif: Rp5.000 / unit</span>
+                </div>
+                <div class="stepper-control">
+                  <button type="button" class="stepper-btn" data-type="motor" data-delta="-1">−</button>
+                  <span class="stepper-val" id="qty-motor">0</span>
+                  <button type="button" class="stepper-btn" data-type="motor" data-delta="1">+</button>
+                </div>
+              </div>
+
+              <!-- Item 3: Mobil -->
+              <div class="pos-calc-item">
+                <div class="calc-info">
+                  <h4>1 Kendaraan Roda 4 (Mobil)</h4>
+                  <span>Tarif: Rp20.000 / unit</span>
+                </div>
+                <div class="stepper-control">
+                  <button type="button" class="stepper-btn" data-type="mobil" data-delta="-1">−</button>
+                  <span class="stepper-val" id="qty-mobil">1</span>
+                  <button type="button" class="stepper-btn" data-type="mobil" data-delta="1">+</button>
+                </div>
+              </div>
+
+              <!-- Item 4: Bus -->
+              <div class="pos-calc-item">
+                <div class="calc-info">
+                  <h4>1 Bus Wisata / Rombongan</h4>
+                  <span>Tarif: Rp50.000 / unit</span>
+                </div>
+                <div class="stepper-control">
+                  <button type="button" class="stepper-btn" data-type="bus" data-delta="-1">−</button>
+                  <span class="stepper-val" id="qty-bus">0</span>
+                  <button type="button" class="stepper-btn" data-type="bus" data-delta="1">+</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grand Total Display -->
+            <div class="pos-total-display">
+              <div>
+                <span>Total Retribusi Tunai</span>
+                <p style="font-size: 11px; opacity: 0.8;">Termasuk Asuransi Jasa Raharja</p>
+              </div>
+              <h2 id="pos-grand-total">Rp30.000</h2>
+            </div>
+
+            <!-- POS Actions -->
+            <div class="pos-actions">
+              <button type="button" class="btn-secondary" id="btn-pos-reset" style="padding: 12px 14px;">
+                <span class="material-symbols-outlined">restart_alt</span>
+                Reset
+              </button>
+              <button type="button" class="btn-tertiary" id="btn-pos-print-cash">
+                <span class="material-symbols-outlined">receipt</span>
+                Cetak Karcis Retribusi Berporporasi
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shift Summary & Gate Log -->
+      <div style="margin-top: 32px;">
+        <h3 style="font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          <span class="material-symbols-outlined" style="color: var(--primary);">monitoring</span>
+          Ringkasan Operasional Validasi Lapangan (Shift Berjalan)
+        </h3>
+
+        <div class="stats-cards-grid">
+          <div class="stat-card">
+            <div class="label">
+              <span class="material-symbols-outlined">directions_car</span>
+              Kendaraan Lolos
+            </div>
+            <div class="value" id="shift-kendaraan-lolos">342</div>
+            <div class="subtext">▲ +18 kendaraan / jam</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="label">
+              <span class="material-symbols-outlined">groups</span>
+              Wisatawan Masuk
+            </div>
+            <div class="value" id="shift-wisatawan-masuk">1.120 Jiwa</div>
+            <div class="subtext">148 Rombongan Keluarga</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="label">
+              <span class="material-symbols-outlined">qr_code_2</span>
+              Rasio Cashless QRIS
+            </div>
+            <div class="value" style="color: var(--primary);" id="shift-rasio-cashless">88.4%</div>
+            <div class="subtext">Target Pemda: &gt; 85%</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="label">
+              <span class="material-symbols-outlined">payments</span>
+              Kas Fisik Loket Tunai
+            </div>
+            <div class="value" style="color: var(--tertiary);" id="shift-kas-fisik">Rp1.450.000</div>
+            <div class="subtext" style="color: var(--tertiary);">11.6% Transaksi Darurat</div>
+          </div>
+        </div>
+
+        <!-- Table of Recent Gate Scans -->
+        <div class="table-card" style="margin-top: 20px;">
+          <div class="card-title-row">
+            <h3>
+              <span class="material-symbols-outlined" style="color: var(--primary);">history</span>
+              Log Audit Aktivitas Gerbang Terkini
+            </h3>
+            <span style="font-size: 12px; color: var(--outline);">Terekam otomatis di Enkripsi TLS 1.3</span>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Waktu (WIB)</th>
+                <th>Booking ID / Karcis</th>
+                <th>Kategori & Manifest</th>
+                <th>Nominal (Rp)</th>
+                <th>Metode Bayar</th>
+                <th>Status Gerbang</th>
+              </tr>
+            </thead>
+            <tbody id="audit-log-gate-body">
+              <!-- Dynamically populated by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN B: PORTAL E-TICKETING WISATAWAN KALIANDA (PUBLIC PORTAL)
+         ==================================================================== -->
+    <section class="screen-view" id="screen-b">
+      <!-- Announcement Banner -->
+      <div class="gov-announcement-strip">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="material-symbols-outlined" style="font-size: 18px;">verified_user</span>
+          <span>Sistem Retribusi Wisata Resmi BPPRD Kabupaten Lampung Selatan — Bebas Pungutan Liar & 100% Cashless</span>
+        </div>
+        <span>Perda Kab. Lamsel No. 4 Tahun 2024</span>
+      </div>
+
+      <!-- Hero Section -->
+      <div class="hero-banner">
+        <div class="hero-badge-tag">
+          <span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+          Layanan E-Retribusi Kawasan Pesisir Kalianda Aktif
+        </div>
+        <h2>Jelajahi Pesisir Kalianda Tanpa Antre di Gerbang</h2>
+        <p>
+          Pesan tiket masuk dan retribusi parkir resmi secara digital. Dapatkan akses cepat di gerbang masuk pantai hanya dalam waktu kurang dari 2 detik dengan QR Code resmi.
+        </p>
+
+        <div class="hero-features-row">
+          <div class="hero-feature-item">
+            <span class="material-symbols-outlined" style="color: #38BDF8;">qr_code_scanner</span>
+            QRIS Kasda Otomatis
+          </div>
+          <div class="hero-feature-item">
+            <span class="material-symbols-outlined" style="color: #4ADE80;">bolt</span>
+            Akses Gate Cepat &lt; 2 Detik
+          </div>
+          <div class="hero-feature-item">
+            <span class="material-symbols-outlined" style="color: #FBBF24;">health_and_safety</span>
+            Asuransi Perlindungan Jasa Raharja
+          </div>
+        </div>
+      </div>
+
+      <!-- Widget Reservasi Instan -->
+      <div class="reservation-card">
+        <div class="card-title-row">
+          <h3>
+            <span class="material-symbols-outlined" style="color: var(--primary);">edit_calendar</span>
+            Formulir Reservasi Tiket Masuk & Parkir Instan
+          </h3>
+          <span style="font-size: 12px; color: var(--on-surface-variant);">Pilih destinasi, tanggal, dan kendaraan Anda</span>
+        </div>
+
+        <!-- 1. Destination Pills Selector -->
+        <label style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--on-surface-variant);">
+          1. Pilih Objek Wisata Pesisir Kalianda:
+        </label>
+        <div class="destination-pills-selector">
+          <div class="dest-pill-item active" data-id="1">
+            <h4>Pantai Marina Kalianda</h4>
+            <div class="tariff">Rp15.000 / orang</div>
+            <p style="font-size: 11px; color: var(--outline); margin-top: 2px;">Merak Belantung</p>
+          </div>
+          <div class="dest-pill-item" data-id="2">
+            <h4>Pantai Kedu Warna</h4>
+            <div class="tariff">Rp15.000 / orang</div>
+            <p style="font-size: 11px; color: var(--outline); margin-top: 2px;">Way Urang</p>
+          </div>
+          <div class="dest-pill-item" data-id="3">
+            <h4>Dermaga Wisata Canti</h4>
+            <div class="tariff">Rp10.000 / orang</div>
+            <p style="font-size: 11px; color: var(--outline); margin-top: 2px;">Rajabasa</p>
+          </div>
+          <div class="dest-pill-item" data-id="4">
+            <h4>Dermaga Bom Kalianda</h4>
+            <div class="tariff">Rp5.000 / orang</div>
+            <p style="font-size: 11px; color: var(--outline); margin-top: 2px;">Pusat Kuliner</p>
+          </div>
+        </div>
+
+        <!-- 2. Reservation Grid (Date, Visitors, Vehicle) -->
+        <div class="reservation-grid">
+          <!-- Date Picker -->
+          <div class="form-field-group">
+            <label>2. Tanggal Kunjungan</label>
+            <input type="date" class="input-styled" id="booking-date-input" value="2026-10-20">
+          </div>
+
+          <!-- Visitors Steppers -->
+          <div class="form-field-group">
+            <label>3. Jumlah Wisatawan</label>
+            <div style="display: flex; gap: 12px;">
+              <!-- Dewasa -->
+              <div style="flex: 1; background: var(--surface-container-low); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--surface-border); display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <div style="font-size: 11px; font-weight: 700;">Dewasa</div>
+                  <div style="font-size: 10px; color: var(--outline);">Wajib Tiket</div>
+                </div>
+                <div class="stepper-control">
+                  <button type="button" class="stepper-btn" id="btn-dewasa-minus">−</button>
+                  <span class="stepper-val" id="val-dewasa">2</span>
+                  <button type="button" class="stepper-btn" id="btn-dewasa-plus">+</button>
+                </div>
+              </div>
+
+              <!-- Anak -->
+              <div style="flex: 1; background: var(--surface-container-low); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--surface-border); display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <div style="font-size: 11px; font-weight: 700;">Anak-Anak</div>
+                  <div style="font-size: 10px; color: var(--outline);">&lt; 7 Tahun</div>
+                </div>
+                <div class="stepper-control">
+                  <button type="button" class="stepper-btn" id="btn-anak-minus">−</button>
+                  <span class="stepper-val" id="val-anak">0</span>
+                  <button type="button" class="stepper-btn" id="btn-anak-plus">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Selector -->
+          <div class="form-field-group">
+            <label>4. Kategori Kendaraan</label>
+            <div class="vehicle-selector-group">
+              <div class="vehicle-pill-opt" data-vehicle="Motor">Motor</div>
+              <div class="vehicle-pill-opt active" data-vehicle="Mobil">Mobil</div>
+              <div class="vehicle-pill-opt" data-vehicle="Bus">Bus</div>
+              <div class="vehicle-pill-opt" data-vehicle="None">Jalan Kaki</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Calculation Breakdown Card -->
+        <div class="calc-breakdown-card">
+          <div class="breakdown-items-list">
+            <div class="bd-item">
+              <span>Retribusi Masuk</span>
+              <strong id="bd-tiket-val">Rp30.000</strong>
+            </div>
+            <div class="bd-item">
+              <span>Retribusi Parkir</span>
+              <strong id="bd-parkir-val">Rp20.000</strong>
+            </div>
+            <div class="bd-item">
+              <span>Asuransi Jasa Raharja</span>
+              <strong id="bd-asuransi-val">Rp2.000</strong>
+            </div>
+          </div>
+
+          <div class="total-pay-box">
+            <div class="price">
+              <span style="font-size: 11px; color: var(--outline); font-weight: 700; text-transform: uppercase;">Total Tagihan Retribusi</span>
+              <h2 id="bd-total-val">Rp52.000</h2>
+            </div>
+            <button type="button" class="btn-primary" id="btn-checkout-qris" style="padding: 14px 28px; font-size: 14px; border-radius: var(--radius-md);">
+              <span class="material-symbols-outlined">qr_code_2</span>
+              Lanjut Bayar via QRIS
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Destinasi Unggulan Kalianda -->
+      <div class="section-heading-box">
+        <h3>Objek Wisata Pesisir Kalianda Resmi</h3>
+        <p>Destinasi pilihan dengan sistem e-retribusi terintegrasi Kasda Lampung Selatan</p>
+      </div>
+
+      <div class="destinations-grid">
+        <!-- Card 1 -->
+        <div class="destination-card">
+          <div class="dest-card-media" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);">
+            <span class="dest-badge-tag">Terfavorit</span>
+            <div>
+              <h3 style="font-size: 16px; color: white;">Pantai Marina</h3>
+              <p style="font-size: 11px; color: #E0F2FE;">Batu Karang & Ombak Eksotis</p>
+            </div>
+          </div>
+          <div class="dest-card-body">
+            <p>Terkenal dengan hamparan karang pemecah ombak yang dramatis dan panorama sunset Selat Sunda.</p>
+            <div class="dest-card-meta">
+              <span>Tarif Masuk:</span>
+              <span class="price">Rp15.000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="destination-card">
+          <div class="dest-card-media" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%);">
+            <span class="dest-badge-tag">Sunset Glamping</span>
+            <div>
+              <h3 style="font-size: 16px; color: white;">Pantai Kedu Warna</h3>
+              <p style="font-size: 11px; color: #FEF3C7;">View Gunung Rajabasa</p>
+            </div>
+          </div>
+          <div class="dest-card-body">
+            <p>Pasir pantai halus dengan latar megah Gunung Rajabasa dan fasilitas santai tepi laut yang hits.</p>
+            <div class="dest-card-meta">
+              <span>Tarif Masuk:</span>
+              <span class="price">Rp15.000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="destination-card">
+          <div class="dest-card-media" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+            <span class="dest-badge-tag">Gerbang Bahari</span>
+            <div>
+              <h3 style="font-size: 16px; color: white;">Dermaga Wisata Canti</h3>
+              <p style="font-size: 11px; color: #D1FAE5;">Penyeberangan Pulau</p>
+            </div>
+          </div>
+          <div class="dest-card-body">
+            <p>Titik tolak utama penyeberangan menuju Pulau Sebesi, Pulau Sebuku, dan kawasan Gunung Krakatau.</p>
+            <div class="dest-card-meta">
+              <span>Tarif Masuk:</span>
+              <span class="price">Rp10.000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="destination-card">
+          <div class="dest-card-media" style="background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);">
+            <span class="dest-badge-tag">Sentra Kuliner</span>
+            <div>
+              <h3 style="font-size: 16px; color: white;">Dermaga Bom Kalianda</h3>
+              <p style="font-size: 11px; color: #EDE9FE;">Pusat Seafood Pesisir</p>
+            </div>
+          </div>
+          <div class="dest-card-body">
+            <p>Pusat kuliner hidangan laut segar malam hari dan dermaga pancing bersejarah di teluk Kalianda.</p>
+            <div class="dest-card-meta">
+              <span>Tarif Masuk:</span>
+              <span class="price">Rp5.000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="section-heading-box" style="margin-top: 40px;">
+        <h3>Pertanyaan yang Sering Diajukan (FAQ)</h3>
+        <p>Panduan lengkap ketentuan e-retribusi wisata Pemkab Lampung Selatan</p>
+      </div>
+
+      <div class="faq-accordion-box">
+        <div class="faq-item open">
+          <button type="button" class="faq-question">
+            <span>Bagaimana cara menggunakan E-Tiket di gerbang masuk?</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            Setelah pembayaran QRIS berhasil, Anda akan menerima E-Tiket ber-QR Code. Cukup perlihatkan layar QR Code kepada petugas di pos gerbang atau dekatkan ke kamera scanner gerbang otomatis. Palang akan terbuka dalam waktu kurang dari 2 detik.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>Apakah E-Tiket bisa dipakai lebih dari satu kali?</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            Tidak. Setiap QR Code E-Tiket memiliki token enkripsi HMAC *single-use* (sekali pakai). Begitu berhasil dipindai pertama kali di gerbang, status tiket otomatis terkunci menjadi "TERPAKAI" di basis data Kasda untuk mencegah pemalsuan dan kebocoran PAD.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>Bagaimana jika koneksi internet di lokasi pantai lambat?</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            Aplikasi SI-PAD dirancang dengan PWA offline capability. Anda dapat menyimpan atau menangkap layar (screenshot) QR Code tiket Anda sebelum berangkat. Petugas gerbang juga dilengkapi scanner offline engine yang tetap dapat memverifikasi tiket sah tanpa internet.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN C: DASHBOARD EKSEKUTIF BPPRD (ADMIN & MONITORING PAD)
+         ==================================================================== -->
+    <section class="screen-view" id="screen-c">
+      <!-- Header & Filters -->
+      <div class="executive-filter-bar">
+        <div class="filter-left-controls">
+          <div style="font-weight: 700; font-size: 13px; color: var(--on-surface);">Periode:</div>
+          <button class="role-btn active" style="padding: 6px 12px; font-size: 12px;">Hari Ini (20 Okt 2026)</button>
+          <button class="role-btn" style="padding: 6px 12px; font-size: 12px;">7 Hari Terakhir</button>
+          <button class="role-btn" style="padding: 6px 12px; font-size: 12px;">Bulan Ini</button>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-secondary" id="btn-export-report">
+            <span class="material-symbols-outlined">file_download</span>
+            Ekspor Laporan (PDF/Excel)
+          </button>
+          <button class="btn-primary" id="btn-rekonsiliasi-kasda">
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+            Rekonsiliasi Kasda
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Executive KPI Cards -->
+      <div class="stats-cards-grid">
+        <div class="stat-card">
+          <div class="label">
+            <span class="material-symbols-outlined" style="color: var(--primary);">payments</span>
+            Total Penerimaan PAD Hari Ini
+          </div>
+          <div class="value" style="color: var(--primary);" id="kpi-total-pad">Rp142.850.000</div>
+          <div class="subtext">▲ +12.4% vs Target Harian BPPRD</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="label">
+            <span class="material-symbols-outlined" style="color: #059669;">groups</span>
+            Volume Total Wisatawan
+          </div>
+          <div class="value" id="kpi-volume-wisatawan">8.420 Jiwa</div>
+          <div class="subtext">Kawasan Wisata Pesisir Kalianda</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="label">
+            <span class="material-symbols-outlined" style="color: #7C3AED;">point_of_sale</span>
+            Rasio Transaksi Digital (Cashless)
+          </div>
+          <div class="value" style="color: #7C3AED;" id="kpi-rasio-digital">89.2%</div>
+          <div class="subtext">QRIS Kasda vs 10.8% Tunai Pos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="label">
+            <span class="material-symbols-outlined" style="color: #10B981;">door_sliding</span>
+            Status Pos & Gerbang Aktif
+          </div>
+          <div class="value" style="color: #10B981;" id="kpi-gerbang-aktif">4 / 4</div>
+          <div class="subtext">Semua Pos Terhubung Real-Time</div>
+        </div>
+      </div>
+
+      <!-- Analytics Charts Grid -->
+      <div class="analytics-charts-grid">
+        <!-- SVG Line/Area Trend Chart -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3>Tren Penerimaan PAD Per Jam (Hari Ini)</h3>
+              <p style="font-size: 11px; color: var(--outline);">Grafik fluktuasi retribusi realisasi vs garis batas target</p>
+            </div>
+            <span class="badge" style="background-color: var(--primary-light); color: var(--primary); font-weight: 700; border-radius: 99px;">
+              Jam Sibuk: 11.00 - 13.00 WIB
+            </span>
+          </div>
+
+          <div class="chart-container-svg">
+            <svg id="hourly-trend-svg" viewBox="0 0 600 200" preserveAspectRatio="none">
+              <!-- Dynamically rendered by app.js -->
+            </svg>
+          </div>
+        </div>
+
+        <!-- Donut Chart per Destination -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3>Distribusi Objek Wisata</h3>
+              <p style="font-size: 11px; color: var(--outline);">Porsi kontribusi retribusi per lokasi</p>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: center;">
+            <svg id="donut-chart-svg" width="200" height="200" viewBox="0 0 200 200">
+              <!-- Rendered by app.js -->
+            </svg>
+          </div>
+
+          <div class="donut-legend-list">
+            <div class="donut-legend-item">
+              <span class="legend-dot-name">
+                <span class="legend-color-dot" style="background-color: #0037B0;"></span>
+                Pantai Marina
+              </span>
+              <strong>45.0%</strong>
+            </div>
+            <div class="donut-legend-item">
+              <span class="legend-dot-name">
+                <span class="legend-color-dot" style="background-color: #D97706;"></span>
+                Pantai Kedu Warna
+              </span>
+              <strong>29.5%</strong>
+            </div>
+            <div class="donut-legend-item">
+              <span class="legend-dot-name">
+                <span class="legend-color-dot" style="background-color: #059669;"></span>
+                Dermaga Wisata Canti
+              </span>
+              <strong>16.0%</strong>
+            </div>
+            <div class="donut-legend-item">
+              <span class="legend-dot-name">
+                <span class="legend-color-dot" style="background-color: #7C3AED;"></span>
+                Dermaga Bom Kalianda
+              </span>
+              <strong>9.5%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-Time Terminal Live Stream -->
+      <div class="live-feed-card">
+        <div class="live-feed-header">
+          <h3>
+            <span class="pulsing-live-dot"></span>
+            Terminal Validasi Gerbang Real-Time (Live Feed)
+          </h3>
+          <span style="font-size: 11px; color: #94A3B8;">Sinkronisasi socket aktif • 0 delay</span>
+        </div>
+
+        <div class="feed-items-stream" id="live-stream-container">
+          <!-- Dynamically populated by app.js -->
+        </div>
+      </div>
+
+      <!-- Tabel Transaksi & Rekonsiliasi -->
+      <div class="table-card">
+        <div class="card-title-row">
+          <h3>
+            <span class="material-symbols-outlined" style="color: var(--primary);">table_chart</span>
+            Tabel Rekonsiliasi Transaksi Retribusi Daerah
+          </h3>
+          <input type="text" class="input-styled" placeholder="Cari Kode Booking / Nama..." style="padding: 6px 14px; font-size: 12px; width: 240px;">
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Kode Tiket</th>
+              <th>Waktu Transaksi</th>
+              <th>Destinasi</th>
+              <th>Wisatawan</th>
+              <th>Manifest</th>
+              <th>Total PAD</th>
+              <th>Metode</th>
+              <th>Status Tiket</th>
+            </tr>
+          </thead>
+          <tbody id="reconciliation-table-body">
+            <!-- Dynamically populated by app.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN D: PORTAL WISATAWAN PWA & SIMULASI E-TIKET AKTIF
+         ==================================================================== -->
+    <section class="screen-view" id="screen-d">
+      <div class="pwa-screen-wrapper">
+        <div class="pwa-phone-mockup">
+          <div class="pwa-notch"></div>
+          
+          <div class="pwa-content-body">
+            <!-- PWA Banner -->
+            <div class="pwa-install-banner">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">install_mobile</span>
+                <div>
+                  <div style="font-weight: 800;">SI-PAD PWA Instan</div>
+                  <div style="font-size: 10px; opacity: 0.9;">Tersimpan di Layar Utama HP</div>
+                </div>
+              </div>
+              <span class="badge" style="background: white; color: var(--primary); padding: 3px 8px; font-size: 10px; font-weight: 800;">TERPASANG</span>
+            </div>
+
+            <!-- BOARDING PASS TICKET CARD -->
+            <div class="boarding-pass-card">
+              <!-- Boarding Pass Header -->
+              <div class="bp-header">
+                <div class="bp-header-top">
+                  <span class="brand">E-RETRIBUSI PEMKAB LAMSEL</span>
+                  <div class="bp-status-chip" id="pwa-status-chip">
+                    <span class="material-symbols-outlined" style="font-size: 14px;">verified</span>
+                    LUNAS — SIAP DIPINDAI
+                  </div>
+                </div>
+                <div class="bp-destination-name" id="pwa-dest-name">Pantai Marina Kalianda</div>
+                <div style="font-size: 12px; color: #BFDBFE;">Badan Pengelola Pajak & Retribusi Daerah</div>
+              </div>
+
+              <!-- QR Code Body -->
+              <div class="bp-body">
+                <div class="bp-qr-container">
+                  <div class="qr-canvas-holder">
+                    <canvas id="pwa-ticket-qr-canvas" width="200" height="200"></canvas>
+                  </div>
+                  <div class="bp-booking-code" id="pwa-booking-code">LMS-20241012-0842</div>
+                  <span style="font-size: 10px; color: var(--outline); margin-top: 2px;">Dekatkan QR ke kamera pos gerbang</span>
+                </div>
+              </div>
+
+              <!-- Perforation Line -->
+              <div class="bp-perforation">
+                <div class="perforation-dashed-line"></div>
+              </div>
+
+              <!-- Ticket Details -->
+              <div class="bp-details-grid">
+                <div class="bp-detail-item">
+                  <span>Manifest Rombongan:</span>
+                  <strong id="pwa-manifest-text">3 Dewasa, 1 Mobil</strong>
+                </div>
+                <div class="bp-detail-item">
+                  <span>Tanggal Kunjungan:</span>
+                  <strong id="pwa-visit-date">20 Okt 2026</strong>
+                </div>
+                <div class="bp-detail-item">
+                  <span>Total Retribusi:</span>
+                  <strong style="color: var(--primary);" id="pwa-total-pay">Rp65.000</strong>
+                </div>
+                <div class="bp-detail-item">
+                  <span>Metode Bayar:</span>
+                  <strong id="pwa-pay-method">QRIS Kasda</strong>
+                </div>
+              </div>
+
+              <!-- Footer Actions -->
+              <div class="bp-footer-action-bar">
+                <button type="button" class="btn-primary" id="btn-pwa-send-to-validator" style="width: 100%; justify-content: center;">
+                  <span class="material-symbols-outlined">qr_code_scanner</span>
+                  Kirim Tiket ini ke Validator Lapangan
+                </button>
+                <div style="display: flex; gap: 8px;">
+                  <button type="button" class="btn-secondary" id="btn-pwa-download" style="flex: 1; justify-content: center; font-size: 12px; padding: 8px;">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">download</span>
+                    Simpan PDF
+                  </button>
+                  <button type="button" class="btn-secondary" onclick="window.print()" style="flex: 1; justify-content: center; font-size: 12px; padding: 8px;">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">print</span>
+                    Cetak Tiket
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- End Boarding pass -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ======================================================================
+     MODALS
+     ====================================================================== -->
+
+<!-- 1. MODAL QRIS PAYMENT -->
+<div class="modal-overlay" id="qris-pay-modal">
+  <div class="modal-card" style="max-width: 420px; text-align: center; padding: 28px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h3 style="font-size: 16px; font-weight: 800; color: var(--primary);">PEMBAYARAN QRIS KASDA LAMSEL</h3>
+      <button class="modal-close-trigger" style="color: var(--outline);">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 14px;">
+      Pindai kode QRIS dinamis di bawah menggunakan aplikasi mobile banking Bank Lampung, BCA, Mandiri, GoPay, OVO, atau ShopeePay.
+    </p>
+
+    <!-- Dynamic QRIS Canvas -->
+    <div style="display: inline-block; background: white; padding: 12px; border-radius: 12px; border: 2px solid #E2E8F0; box-shadow: var(--shadow-sm); margin-bottom: 14px;">
+      <canvas id="qris-pay-canvas" width="210" height="210"></canvas>
+    </div>
+
+    <div style="background-color: var(--surface-container-low); padding: 12px; border-radius: 8px; margin-bottom: 18px; text-align: left; font-size: 12px;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+        <span style="color: var(--outline);">Destinasi:</span>
+        <strong id="qris-modal-dest">Pantai Marina Kalianda</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+        <span style="color: var(--outline);">Kode Booking:</span>
+        <strong id="qris-modal-booking">LMS-20261020-0089</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span style="color: var(--outline);">Total Retribusi:</span>
+        <strong style="color: var(--primary); font-size: 14px;" id="qris-modal-nominal">Rp52.000</strong>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <button type="button" class="btn-primary" id="btn-simulate-qris-paid" style="justify-content: center; padding: 12px;">
+        <span class="material-symbols-outlined">check_circle</span>
+        Simulasikan Pembayaran Berhasil (Instant Vibe)
+      </button>
+      <button type="button" class="btn-secondary modal-close-trigger" style="justify-content: center; padding: 10px;">
+        Batal
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 2. MODAL STRUK THERMAL 58MM -->
+<div class="modal-overlay" id="thermal-receipt-modal">
+  <div class="modal-card" style="max-width: 380px; padding: 24px; background: #1E293B;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; color: white;">
+      <h3 style="font-size: 15px; color: #F8FAFC; display: flex; align-items: center; gap: 6px;">
+        <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
+        Pratinjau Struk Thermal 58mm
+      </h3>
+      <button class="modal-close-trigger" style="color: #94A3B8;">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Paper Container -->
+    <div id="thermal-receipt-content"></div>
+
+    <div style="display: flex; gap: 10px; margin-top: 24px;">
+      <button type="button" class="btn-primary" id="btn-execute-print-thermal" style="flex: 1; justify-content: center;">
+        <span class="material-symbols-outlined">print</span>
+        Cetak ke Printer PT-210
+      </button>
+      <button type="button" class="btn-secondary modal-close-trigger" style="color: white; border-color: #475569; justify-content: center;">
+        Tutup
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 3. MODAL PALANG GERBANG OTOMATIS (BARRIER GATE ANIMATION) -->
+<div class="modal-overlay" id="gate-animation-modal">
+  <div class="modal-card" style="max-width: 440px; padding: 24px; text-align: center;">
+    <h3 style="font-size: 17px; margin-bottom: 8px;">KONTROL PALANG GERBANG POS</h3>
+    <p id="gate-modal-status-text" style="font-size: 13px; font-weight: 700; color: #16A34A; margin-bottom: 16px;">
+      PALANG TERBUKA — KENDARAAN SILAKAN MASUK
+    </p>
+
+    <!-- Barrier Gate Stage -->
+    <div class="barrier-gate-stage">
+      <div class="gate-post">
+        <div class="gate-light-bulb" id="barrier-light-bulb"></div>
+      </div>
+      <div class="gate-arm" id="barrier-arm-element"></div>
+    </div>
+
+    <p style="font-size: 11px; color: var(--outline); margin-top: 14px;">
+      Sistem sensor ultrasonik mendeteksi kendaraan lolos gerbang secara aman.
+    </p>
+  </div>
+</div>
+
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Scripts -->
+<script src="js/audio.js"></script>
+<script src="js/qr.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

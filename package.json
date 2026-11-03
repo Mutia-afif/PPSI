@@ -1,0 +1,12 @@
+{
+  "name": "sipad-lamsel-kalianda",
+  "version": "1.0.0",
+  "description": "SI-PAD Lamsel - Modul E-Retribusi Wisata Kalianda (BPPRD Lampung Selatan)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Mutia Afif Ramadhani",
+  "license": "ISC"
+}
+
